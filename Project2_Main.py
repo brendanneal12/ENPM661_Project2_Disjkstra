@@ -61,10 +61,11 @@ class Node():
 
 ##------------------Defining my Check in Workspace? Function-------##    
 def CheckInWorkspace(CurrentX, CurrentY):
-    WsX_Extended = 600 - 1
-    WsY_Extended = 250 - 1
-    if (CurrentX > WsX_Extended or int(CurrentX)<0 or int(CurrentY)<0 or CurrentY>WsY_Extended):
+    WsX_Extended = 600-1
+    WsY_Extended = 250-1
+    if (CurrentX > WsX_Extended or int(CurrentX)<1 or int(CurrentY)<1 or CurrentY>WsY_Extended):
         return 1
+    return 0
     
 ##-------------------Defining my Check in Obstacles? Function-------##
 
