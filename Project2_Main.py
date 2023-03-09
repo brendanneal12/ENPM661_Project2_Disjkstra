@@ -7,6 +7,9 @@ import numpy as np
 import cv2 as cv
 from matplotlib import pyplot as plt
 import math
+import timeit
+import queue
+from queue import PriorityQueue
 
 ##----Importing Variables from Other Files-----##
 from ObstacleDefinitions import *
@@ -40,6 +43,20 @@ class Node():
     
     def CheckLessThan(self, other_node):
         return self.cost < other_node.cost
+    
+    def ReturnPath(self):
+        moves = []
+        nodes = []
+        CurrentNode = self
+        while(CurrentNode.ReturnMove() is not None):
+            moves.append(CurrentNode.ReturnMove())
+            nodes.append(CurrentNode)
+            CurrentNode = CurrentNode.ReturnParent()
+        nodes.append(CurrentNode)
+        nodes.reverse()
+        moves.reverse()
+
+        return moves, nodes
     
 
 ##------------------Defining my Check in Workspace? Function-------##    
@@ -102,7 +119,13 @@ def GetGoalState():
     Goal_State=[int(x) for x in input().split()]
     return  Goal_State
 
+#----------------Defining my Compare to Goal Function------------------##
 
+def CheckGoal(CurrentNode, GoalNode):
+    if np.array_equal(CurrentNode, GoalNode) or CurrentNode == GoalNode:
+        return True
+    else:
+        return False
 
 ##-----------------------"Main Script"---------------------------##
 
@@ -146,6 +169,76 @@ if CheckInWorkspace(InitState[0], InitState[1]):
 if CheckInWorkspace(GoalState[0], GoalState[1]):
     print("Goal State is Outside of Workspace, please restart")
     exit()
+
+Open_List = PriorityQueue()
+starting_node = Node(InitState, None, None, 0)
+Open_List.put((starting_node.ReturnCost(), starting_node))
+GoalReach = False
+
+for i in range(600):
+    for j in range(250):
+        Closed_List = np.array([[Node([i,j],None, None, math.inf)]])
+
+Working_Space = WSColoring(Workspace, InitState, [0,255,0])
+Working_Space = WSColoring(Workspace, GoalState, [0,255,0])
+plt.imshow(Working_Space)
+plt.show()
+
+##CONDUCT DIJKSTRA
+
+starttime = timeit.default_timer()
+print("Dijkstra Search Starting!!!!")
+
+while not (Open_List.empty() and GoalReach):
+    current_node = Open_List.get()
+    i, j = current_node.ReturnState()
+    Working_Space = WSColoring(Working_Space, current_node.ReturnState(), [255, 255, 255])
+
+    XMoves = {'Up':i ,'UpRight':i+1, 'Right':i+1, 'DownRight':i+1, 'Down':i, 'DownLeft':i-1,'Left':i-1, 'UpLeft':i-1}
+    YMoves = {'Up':j+1 ,'UpRight':j+1, 'Right':j, 'DownRight':j-1, 'Down':j-1, 'DownLeft':j-1,'Left':j, 'UpLeft':j+1}
+    Moves_C2C = {'Up':1 ,'UpRight':1.4, 'Right':1, 'DownRight':1.4, 'Down':1, 'DownLeft':1.4,'Left':1, 'UpLeft':1.4}
+
+    goalreachcheck = CheckGoal(current_node.ReturnState(), GoalState)
+
+    if goalreachcheck:
+        print("Goal Reached!")
+        print("Total Cost:", current_node.ReturnCost())
+        MovesPath, Path = current_node.ReturnPath()
+
+        for nodes in Path:
+            Position = nodes.ReturnState()
+            Working_Space = WSColoring(Working_Space, Position, [255,255,255])
+
+    else:
+        NewNode = GeneratePossibleMoves(current_node)
+        Parent_Cost = current_node.ReturnCost()
+
+        for move in NewNode:
+            Child_Position = [XMoves.get(move), YMoves.get(move)]
+            C2C = Parent_Cost + Moves_C2C.get(move)
+
+            if(Closed_List[Child_Position[0], Child_Position[1]].ReturnCost() == math.inf):
+               New_Child = Node(Child_Position, current_node, move, C2C)
+               Closed_List[Child_Position[0], Child_Position[1]] = New_Child
+
+               Open_List.put((New_Child.ReturnCost(), New_Child))
+
+
+            else:
+                if(C2C < Closed_List[Child_Position[0], Child_Position[1]].ReturnCost()):
+                    New_Child = Node(Child_Position, current_node, move, C2C)
+                    Closed_List[Child_Position[0], Child_Position[1]] = New_Child
+                    Open_List.put((New_Child.ReturnCost(), New_Child))
+
+    if goalreachcheck:
+        break
+
+stoptime = timeit.default_timer()
+
+print("The Algorithm took", stoptime-starttime, "seconds to solve.")
+
+plt.show(Working_Space)
+plt.show()
 
 
 
