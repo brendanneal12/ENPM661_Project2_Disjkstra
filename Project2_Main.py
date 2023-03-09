@@ -41,8 +41,8 @@ class Node():
     def ReturnCost(self):
         return self.C2C
     
-    def CheckLessThan(self, other_node):
-        return self.cost < other_node.cost
+    def __lt__(self, other):
+        return self.C2C < other.C2C
     
     def ReturnPath(self):
         moves = []
