@@ -128,5 +128,24 @@ Hexagon = cv.fillPoly(Workspace, [Hexagon_Points], [0, 0, 255])
 plt.imshow(Workspace, origin='lower')
 plt.show()
 
+InitState = GetInitialState()
+GoalState = GetGoalState()
+
+if CheckInObstacles(InitState[0], InitState[1], Bottom_Rectangle_Points_OBS , Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS):
+    print("Initial State is in an obstacle, please restart")
+    exit()
+
+if CheckInObstacles(GoalState[0], GoalState[1], Bottom_Rectangle_Points_OBS , Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS):
+    print("Goal State is in an obstacle, please restart")
+    exit()
+
+if CheckInWorkspace(InitState[0], InitState[1]):
+    print("Initial State is Outside of Workspace, please restart")
+    exit()
+
+if CheckInWorkspace(GoalState[0], GoalState[1]):
+    print("Goal State is Outside of Workspace, please restart")
+    exit()
+
 
 
