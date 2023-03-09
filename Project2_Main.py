@@ -6,6 +6,10 @@
 import numpy as np
 import cv2 as cv
 from matplotlib import pyplot as plt
+import math
+
+##----Importing Variables from Other Files-----##
+from ObstacleDefinitions import *
 
 ##-------Generating Node Class-----------##
 class Node():
@@ -77,4 +81,40 @@ def GeneratePossibleMoves(CurrentNode):
             possible_moves.remove(moves[move])
     return possible_moves
 
-##------------Defining My Obstacle Space Using Half-Panes and Semi-Algebraic Models------##
+
+#Defining my Map Coloring Function
+def WSColoring(Workspace, Location, Color):
+    x,y,_ = Workspace.shape
+    translation_y = Location[0]
+    translation_x = x - Location[1] - 1
+    Workspace[translation_x,translation_y,:] = Color
+    return Workspace
+
+
+
+##-----------------------"Main Script"---------------------------##
+
+#Area Information
+SizeAreaX = 600
+SizeAreaY = 250
+
+Workspace = np.zeros((SizeAreaY, SizeAreaX,3))
+Workspace[:,:] = (0,0,0)
+
+#Drawing Extended Obstacle Space Using Half Panes
+Rectangle1_Obs_Space = cv.fillPoly(Workspace, [Bottom_Rectangle_Points_OBS], [255,0,0])
+Rectangle2_Obs_Space = cv.fillPoly(Workspace, [Top_Rectangle_Points_OBS], [255,0,0])
+Triangle_Obs_Space = cv.fillPoly(Workspace, [Triangle_Points_OBS], [255,0,0])
+Hexagon_Obs_Space = cv.fillPoly(Workspace, [Hexagon_Points_OBS], [255,0,0])
+
+#Drawing Original Obstacles
+Rectangle1= cv.fillPoly(Workspace, [Bottom_Rectangle_Points], [0,0,255])
+Rectangle2 = cv.fillPoly(Workspace, [Top_Rectangle_Points], [0,0,255])
+Triangle= cv.fillPoly(Workspace, [Triangle_Points], [0,0,255])
+Hexagon = cv.fillPoly(Workspace, [Hexagon_Points], [0, 0, 255])
+
+plt.imshow(Workspace, origin='lower')
+plt.show()
+
+
+
