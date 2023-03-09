@@ -81,7 +81,6 @@ def GeneratePossibleMoves(CurrentNode):
             possible_moves.remove(moves[move])
     return possible_moves
 
-
 #Defining my Map Coloring Function
 def WSColoring(Workspace, Location, Color):
     x,y,_ = Workspace.shape
@@ -89,6 +88,19 @@ def WSColoring(Workspace, Location, Color):
     translation_x = x - Location[1] - 1
     Workspace[translation_x,translation_y,:] = Color
     return Workspace
+
+##--------------Defining my GetInitialState Function-------------##
+def GetInitialState():
+    print("Enter initial node, separated by spaces: ")
+    Init_State=[int(x) for x in input().split()]
+    return Init_State
+
+
+##--------------Defining my GetGoalState Function-------------##
+def GetGoalState():
+    print("Enter goal node, separated by spaces: ")
+    Goal_State=[int(x) for x in input().split()]
+    return  Goal_State
 
 
 
