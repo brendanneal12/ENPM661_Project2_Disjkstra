@@ -95,7 +95,7 @@ def GeneratePossibleMoves(CurrentNode):
     move_x = [x, x+1, x+1, x+1, x, x-1, x-1, x-1]
     move_y = [y+1, y+1, y, y-1, y-1, y-1, y, y+1]
     for move in range(len(moves)):
-        if (CheckInObstacles(move_x[move], move_y[move]) or CheckInWorkspace(move_x[move], move_y[move]) or CurrentNode.getParentState() == [move_x[move], move_y[move]]):
+        if (CheckInObstacles(move_x[move], move_y[move],Bottom_Rectangle_Points_OBS ,Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS) or CheckInWorkspace(move_x[move], move_y[move]) or CurrentNode.ReturnParentState() == [move_x[move], move_y[move]]):
             possible_moves.remove(moves[move])
     return possible_moves
 
@@ -176,9 +176,8 @@ starting_node = Node(InitState, None, None, 0)
 Open_List.put((starting_node.ReturnCost(), starting_node))
 GoalReach = False
 
-for i in range(600):
-    for j in range(250):
-        Closed_List = np.array([[Node([i,j],None, None, math.inf)]])
+Moves_C2C = {'Up':1 ,'UpRight':1.4, 'Right':1, 'DownRight':1.4, 'Down':1, 'DownLeft':1.4,'Left':1, 'UpLeft':1.4}
+Closed_List = np.array([[Node([i,j],None, None, math.inf)for j in range(SizeAreaY)]for i in range(SizeAreaX)])
 
 Working_Space = WSColoring(Workspace, InitState, [0,255,0])
 Working_Space = WSColoring(Workspace, GoalState, [0,255,0])
@@ -191,7 +190,7 @@ starttime = timeit.default_timer()
 print("Dijkstra Search Starting!!!!")
 
 while not (Open_List.empty() and GoalReach):
-    current_node = Open_List.get()
+    current_node = Open_List.get()[1]
     i, j = current_node.ReturnState()
     Working_Space = WSColoring(Working_Space, current_node.ReturnState(), [255, 255, 255])
 
@@ -208,7 +207,7 @@ while not (Open_List.empty() and GoalReach):
 
         for nodes in Path:
             Position = nodes.ReturnState()
-            Working_Space = WSColoring(Working_Space, Position, [255,255,255])
+            Working_Space = WSColoring(Working_Space, Position, [255,0,255])
 
     else:
         NewNode = GeneratePossibleMoves(current_node)
@@ -216,6 +215,7 @@ while not (Open_List.empty() and GoalReach):
 
         for move in NewNode:
             Child_Position = [XMoves.get(move), YMoves.get(move)]
+            print("Possible Moves Are:", Child_Position)
             C2C = Parent_Cost + Moves_C2C.get(move)
 
             if(Closed_List[Child_Position[0], Child_Position[1]].ReturnCost() == math.inf):
@@ -238,7 +238,7 @@ stoptime = timeit.default_timer()
 
 print("The Algorithm took", stoptime-starttime, "seconds to solve.")
 
-plt.show(Working_Space)
+plt.imshow(Working_Space)
 plt.show()
 
 
