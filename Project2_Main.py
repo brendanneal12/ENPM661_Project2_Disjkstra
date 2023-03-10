@@ -35,7 +35,6 @@ class Node():
     def ReturnParentState(self):
         if self.ReturnParent() is None:
             return None
-
         return self.ReturnParent().ReturnState()
     
     def ReturnCost(self):
@@ -45,18 +44,18 @@ class Node():
         return self.C2C < other.C2C
     
     def ReturnPath(self):
-        moves = []
-        nodes = []
+        CompletedMoves = []
+        NodePath = []
         CurrentNode = self
         while(CurrentNode.ReturnMove() is not None):
-            moves.append(CurrentNode.ReturnMove())
-            nodes.append(CurrentNode)
+            CompletedMoves.append(CurrentNode.ReturnMove())
+            NodePath.append(CurrentNode)
             CurrentNode = CurrentNode.ReturnParent()
-        nodes.append(CurrentNode)
-        nodes.reverse()
-        moves.reverse()
+        NodePath.append(CurrentNode)
+        NodePath.reverse()
+        NodePath.reverse()
 
-        return moves, nodes
+        return CompletedMoves, NodePath
     
 
 ##------------------Defining my Check in Workspace? Function-------##    
@@ -95,7 +94,9 @@ def GeneratePossibleMoves(CurrentNode):
     move_x = [x, x+1, x+1, x+1, x, x-1, x-1, x-1]
     move_y = [y+1, y+1, y, y-1, y-1, y-1, y, y+1]
     for move in range(len(moves)):
-        if (CheckInObstacles(move_x[move], move_y[move],Bottom_Rectangle_Points_OBS ,Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS) or CheckInWorkspace(move_x[move], move_y[move]) or CurrentNode.ReturnParentState() == [move_x[move], move_y[move]]):
+        if (CheckInObstacles(move_x[move], move_y[move],Bottom_Rectangle_Points_OBS ,Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS) 
+            or CheckInWorkspace(move_x[move], move_y[move]) 
+            or CurrentNode.ReturnParentState() == [move_x[move], move_y[move]]):
             possible_moves.remove(moves[move])
     return possible_moves
 
@@ -159,19 +160,19 @@ InitState = GetInitialState()
 GoalState = GetGoalState()
 
 if CheckInObstacles(InitState[0], InitState[1], Bottom_Rectangle_Points_OBS , Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS):
-    print("Initial State is in an obstacle, please restart")
+    print("Initial State is in an obstacle, try again!")
     exit()
 
 if CheckInObstacles(GoalState[0], GoalState[1], Bottom_Rectangle_Points_OBS , Top_Rectangle_Points_OBS, Triangle_Points_OBS, Hexagon_Points_OBS):
-    print("Goal State is in an obstacle, please restart")
+    print("Goal State is in an obstacle, try again!")
     exit()
 
 if CheckInWorkspace(InitState[0], InitState[1]):
-    print("Initial State is Outside of Workspace, please restart")
+    print("Initial State is Outside of Workspace, try again!")
     exit()
 
 if CheckInWorkspace(GoalState[0], GoalState[1]):
-    print("Goal State is Outside of Workspace, please restart")
+    print("Goal State is Outside of Workspace, try again!")
     exit()
 
 Open_List = PriorityQueue()
@@ -184,7 +185,7 @@ Closed_List = np.array([[Node([i,j],None, None, math.inf)for j in range(SizeArea
 
 Working_Space = WSColoring(Workspace, InitState, [0,255,0])
 Working_Space = WSColoring(Workspace, GoalState, [0,255,0])
-plt.imshow(Working_Space)
+plt.imshow(Working_Space, origin = 'lower')
 plt.show()
 
 ##CONDUCT DIJKSTRA
