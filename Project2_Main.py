@@ -109,14 +109,14 @@ def WSColoring(Workspace, Location, Color):
 
 ##--------------Defining my GetInitialState Function-------------##
 def GetInitialState():
-    print("Enter initial node, separated by spaces: ")
+    print("Enter Initial Node X and Y, separated by spaces: ")
     Init_State=[int(x) for x in input().split()]
     return Init_State
 
 
 ##--------------Defining my GetGoalState Function-------------##
 def GetGoalState():
-    print("Enter goal node, separated by spaces: ")
+    print("Enter Goal Node X and Y, separated by spaces: ")
     Goal_State=[int(x) for x in input().split()]
     return  Goal_State
 
@@ -134,16 +134,19 @@ def CheckGoal(CurrentNode, GoalNode):
 SizeAreaX = 600
 SizeAreaY = 250
 
-Workspace = np.zeros((SizeAreaY, SizeAreaX,3))
+video_name = ('dijkstra_brendan_neal')
+fourcc = cv.VideoWriter_fourcc(*"mp4v")
+video = cv.VideoWriter(str(video_name)+".mp4", fourcc, 300, (SizeAreaX, SizeAreaY))
+Workspace = np.zeros((SizeAreaY, SizeAreaX,3), dtype = np.uint8)
 Workspace[:,:] = (0,0,0)
 
-#Drawing Extended Obstacle Space Using Half Panes
+#Drawing Extended Obstacle Space Using cv2.fillPoly
 Rectangle1_Obs_Space = cv.fillPoly(Workspace, [Bottom_Rectangle_Points_OBS], [255,0,0])
 Rectangle2_Obs_Space = cv.fillPoly(Workspace, [Top_Rectangle_Points_OBS], [255,0,0])
 Triangle_Obs_Space = cv.fillPoly(Workspace, [Triangle_Points_OBS], [255,0,0])
 Hexagon_Obs_Space = cv.fillPoly(Workspace, [Hexagon_Points_OBS], [255,0,0])
 
-#Drawing Original Obstacles
+#Drawing Original Obstacles using cv2.fillPoly
 Rectangle1= cv.fillPoly(Workspace, [Bottom_Rectangle_Points], [0,0,255])
 Rectangle2 = cv.fillPoly(Workspace, [Top_Rectangle_Points], [0,0,255])
 Triangle= cv.fillPoly(Workspace, [Triangle_Points], [0,0,255])
@@ -193,6 +196,7 @@ while not (Open_List.empty() and GoalReach):
     current_node = Open_List.get()[1]
     i, j = current_node.ReturnState()
     Working_Space = WSColoring(Working_Space, current_node.ReturnState(), [255, 255, 255])
+    video.write(Working_Space)
 
     XMoves = {'Up':i ,'UpRight':i+1, 'Right':i+1, 'DownRight':i+1, 'Down':i, 'DownLeft':i-1,'Left':i-1, 'UpLeft':i-1}
     YMoves = {'Up':j+1 ,'UpRight':j+1, 'Right':j, 'DownRight':j-1, 'Down':j-1, 'DownLeft':j-1,'Left':j, 'UpLeft':j+1}
@@ -208,6 +212,12 @@ while not (Open_List.empty() and GoalReach):
         for nodes in Path:
             Position = nodes.ReturnState()
             Working_Space = WSColoring(Working_Space, Position, [255,0,255])
+            video.write(Working_Space)
+
+        for i in range(200):
+            video.write(Working_Space)
+
+        break
 
     else:
         NewNode = GeneratePossibleMoves(current_node)
@@ -238,8 +248,11 @@ stoptime = timeit.default_timer()
 
 print("The Algorithm took", stoptime-starttime, "seconds to solve.")
 
+video.release()
+
 plt.imshow(Working_Space)
 plt.show()
+
 
 
 
