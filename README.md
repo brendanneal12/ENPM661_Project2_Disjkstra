@@ -29,7 +29,7 @@ numpy, OpenCV, from matplotlib: pyplot, math, timeit, queue, from queue: Priorit
 9. If your goal state is in an obstacle or outside of the workspace, you will be prompted to restart.
 10. Observe the Possible Moves printed to the terminal as the Dijkstra search runs.
 11. Once the Dijkstra search finishes, the completed map is displayed to screen, the total cost of the path is printed to the terminal, the time it took to complete the search is printed to the terminal, and a video file named "dijkstra_brendan_neal.mp4" is added to the workspace.
-12. Open the video file to watch the animation of the search and backtracking.
+12. Open the video file outside of VSCode to watch the animation of the search and backtracking.
 
 # IMPORTANT NOTES PLEASE READ
 1. There is no visual representation of the search and backtracking while the search is taking place. The only way to view the animation is to open the generated video file.
