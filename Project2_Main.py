@@ -194,8 +194,7 @@ Map_Weights = np.array([[Node([i,j],None, None, math.inf)for j in range(SizeArea
 
 Working_Space = WSColoring(Workspace, InitState, [0,255,0]) #Plot initial state in GREEN on Workspace.
 Working_Space = WSColoring(Workspace, GoalState, [0,255,0]) #Plot goal state in GREEN on Workspace.
-plt.imshow(Working_Space, origin = 'lower') #Show Workspace with Initial and Goal Nodes.
-plt.show()
+
 
 ##---------------------------CONDUCT DIJKSTRA---------------------##
 
