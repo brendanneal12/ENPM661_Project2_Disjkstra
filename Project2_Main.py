@@ -2,7 +2,6 @@
 #ENPM661 Project 2
 #Directory ID: bneal12
 
-##GitHub Repository Link: 
 
 ##---------Importing Functions-----------##
 import numpy as np
