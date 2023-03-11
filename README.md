@@ -24,7 +24,7 @@ numpy, OpenCV, from matplotlib: pyplot, math, timeit, queue, from queue: Priorit
 # How to Run Code
 1. Make sure both files are loaded into workspace.
 2. Hit "Run" for ObstacleDefinitions.py
-3. Switch to Project2_Main.py
+3. Switch to dijkstra_brendan_neal.py
 4. Hit Run
 5. Observe the Workspace in displayed on screen, then close the window.
 6. Prompted by the terminal, enter the Initial Node state, X and Y, with spaces separating them. Example: 5 5
