@@ -34,7 +34,7 @@ numpy, OpenCV, from matplotlib: pyplot, math, timeit, queue, from queue: Priorit
 # IMPORTANT NOTES PLEASE READ
 1. There is no visual representation of the search and backtracking while the search is taking place. The only way to view the animation is to open the generated video file.
 
-2. Please click the following link in order to view an example output video that is produced by my code. I cannot commit the video directly to GitHub since the file size is way too large: https://drive.google.com/drive/u/0/folders/17SJckOGSsYpg5Na8HCx6JNp36jlN5ils
+2. Please click the following link in order to view an example output video that is produced by my code. Initial State is 5 5, Goal State is 300 225. I cannot commit the video directly to GitHub since the file size is way too large: https://drive.google.com/drive/u/0/folders/17SJckOGSsYpg5Na8HCx6JNp36jlN5ils
 
 
 
