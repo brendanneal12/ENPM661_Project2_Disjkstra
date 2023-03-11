@@ -171,12 +171,12 @@ Hexagon_Points_OBS = np.array([[X_BottomMost_Corner_Ext, Y_BottomMost_Corner_Ext
 
 #Triangle
 Bot_Tri_CornerX_Ext = 460 - Clearance
-Bot_Tri_CornerY_Ext = 25 - 3*Clearance
+Bot_Tri_CornerY_Ext = 25 - 3*Clearance #Needed to Tack on Extra to get the proper side extension.
 
 Top_Tri_CornerX_Ext = 460 - Clearance
-Top_Tri_CornerY_Ext = 225 + 3*Clearance
+Top_Tri_CornerY_Ext = 225 + 3*Clearance #Needed to Tack on Extra to get the proper side extension.
 
-Right_Tri_CornerX_Ext= 510 + 2*Clearance
+Right_Tri_CornerX_Ext= 510 + 2*Clearance #Needed to Tack on Extra to get the proper side extension.
 Right_Tri_CornerY_Ext = 125
 
 Triangle_Points_OBS = np.array([[Bot_Tri_CornerX_Ext, Bot_Tri_CornerY_Ext],

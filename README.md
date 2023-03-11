@@ -1,2 +1,38 @@
 # ENPM661_Project2_Disjkstra
 UMD ENPM661 Project 2
+
+# Student Information
+Brendan Neal
+brendanneal12@gmail.com
+Directory ID: bneal12
+
+Project 2 Goal: Solve a maze using Dijkstra Search Algorithm
+
+File Names: ObstacleDefinitions.py, Project2_Main.py
+
+IDE: Visual Studio Code
+
+Python Version: 3
+
+# Libraries Used
+numpy, OpenCV, from matplotlib: pyplot, math, timeit, queue, from queue: PriorityQueue
+
+# How to Run Code
+1. Make sure both files are loaded into workspace.
+2. Hit "Run" for ObstacleDefinitions.py
+3. Switch to Project2_Main.py
+4. Hit Run
+5. Observe the Workspace in displayed on screen, then close the window.
+6. Prompted by the terminal, enter the Initial Node state, X and Y, with spaces separating them. Example: 5 5
+7. If your initial state is in an obstacle or outside of the workspace, you will be prompted to restart.
+8. Prompted by the terminal, enter the Goal Node state, X and Y, with spaces separating them. Example: 250 25
+9. If your goal state is in an obstacle or outside of the workspace, you will be prompted to restart.
+10. Observe the Possible Moves printed to the terminal as the Dijkstra search runs.
+11. Once the Dijkstra search finishes, the completed map is displayed to screen, the total cost of the path is printed to the terminal, the time it took to complete the search is printed to the terminal, and a video file named "dijkstra_brendan_neal.mp4" is added to the workspace.
+12. Open the video file to watch the animation of the search and backtracking.
+
+# IMPORTANT NOTE PLEASE READ
+There is no visual representation of the search and backtracking while the search is taking place. THe only way to view the animation is to open the generated video file.
+
+
+
