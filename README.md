@@ -32,7 +32,7 @@ numpy, OpenCV, from matplotlib: pyplot, math, timeit, queue, from queue: Priorit
 12. Open the video file to watch the animation of the search and backtracking.
 
 # IMPORTANT NOTE PLEASE READ
-There is no visual representation of the search and backtracking while the search is taking place. THe only way to view the animation is to open the generated video file.
+There is no visual representation of the search and backtracking while the search is taking place. The only way to view the animation is to open the generated video file.
 
 
 
